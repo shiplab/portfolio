@@ -1,131 +1,118 @@
-
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico"> -->
+      <title>Ship Design Layout Tool - A Web-based Prototype</title>
+<style>
+body {
+    background-color: white;
+    font-family: sans-serif;
+  display: block;
+}
 
-    <title>Ship Design Layout Tool - A Web-based Prototype</title>
-
-    <style>
-        
-            p.pblock {
-          margin-top: 0em;
-          margin-bottom: 0em;
-        }   
-        </style>
-
-    <!-- Bootstrap core CSS -->
-    <link href="bootstrap.min.css" rel="stylesheet">
+    p.pblock {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+    
+h1 {
+    margin-left: 20px;
+    text-align: center;
+}
+    
+h2 {
+    margin-left: 20px;
+    margin-bottom: 0em;
+}     
+</style>
   </head>
-
   <body>
-
-
-    <main role="main" class="container">
-
-        <h1>Ship Design Layout Tool - A Web-based App Prototype</h1>
-        <p class="lead" style="width:80%" align="right"> by Henrique M. Gaspar - Associate Professor, <a href="http://www.shiplab.hials.org/">ShipLab Aalesund University College <img src="hials_logo.jpg" width="10%"> </a> <br>(hega @ hials.no), v0.1, Jun 2015.</p>
-  
-        <h3>GA Canvas</h3>
-        <div class="row">
-          <div class="col-12">
-
-            <p>Grid size<input type="range" id="grid_s" value=12 min="0" max="50" oninput="create_grid()" step="1"> Canvas size - x: <input type="range" id="canv_x" value=985 min="0" max="5000" oninput="create_grid()" step="1"> y:<input type="range" id="canv_y" value=301 min="0" max="1201" oninput="create_grid()" step="1"></p>
-            <p>Database:
+      <div id="main" style="width:1000px;border:1px solid grey; padding:20px; font-family:Helvetica, sans-serif; margin: 0 auto;">
+      <h1>Ship Design Layout Tool - A Web-based App Prototype</h1>
+       <div align="right">
+           <p style="width:80%" align="right"> <small>by Henrique M. Gaspar - Associate Professor, <a href="http://www.shiplab.hials.org/">ShipLab Aalesund University College <img src="hials_logo.jpg" width="10%"> </a> <br>(hega @ hials.no), v0.1, Jun 2015.</small></p></div>
       
-            <input type="radio" name="db" id="simple_b" onclick="create_grid()"checked>simple_blocks.csv
-            <input type="radio" name="db" id="maindeck" onclick="create_grid()">maindeck.csv
-            <input type="radio" name="db" id="twindeck" onclick="create_grid()">twindeck.csv
+    <p>Grid size<input type="range" id="grid_s" value=12 min="0" max="50" oninput="create_grid()" step="1"> Canvas size - x: <input type="range" id="canv_x" value=985 min="0" max="5000" oninput="create_grid()" step="1"> y:<input type="range" id="canv_y" value=301 min="0" max="1201" oninput="create_grid()" step="1"></p>
+        <p>Database:
+      
+<input type="radio" name="db" id="simple_b" onclick="create_grid()">simple_blocks.csv
+<input type="radio" name="db" id="maindeck" onclick="create_grid()">maindeck.csv
+<input type="radio" name="db" id="twindeck" onclick="create_grid()" checked>twindeck.csv
       
       
-            <p>  <div id="grid_here">
+   <p><div id="grid_here">
 
-            </div>
+</div>
+      
+      <div style="width: 100%; overflow: hidden;">
+    <div style="width: 300px; float: left;"> <p><strong>Space Information:</strong></p>
+          <p class="pblock">Columns: <span id="lines_space" display:inline;></span></p>
+          <p class="pblock">Rows: <span id="rows_space"></span></p>
+          <p class="pblock">Total Area: <span id="area_space"></span></p> 
+        <p><strong>Matches:</strong></p>
+        <span id="matches"></span>
+    
+         
           </div>
-        </div>
-  
-  
-        <div class="row">
-          <div class="col-md-6">
-            <div> <p><strong>Space Information:</strong></p>
-                <p class="pblock">Columns: <span id="lines_space" display:inline;></span></p>
-                <p class="pblock">Rows: <span id="rows_space"></span></p>
-                <p class="pblock">Total Area: <span id="area_space"></span></p> 
-              <p><strong>Matches:</strong></p>
-              <span id="matches"></span>
           
-               
-                </div>
-
-
-
-          </div>
-          <div class="col-md-6">
-            <p><strong>Number of Blocks in the Database: </strong><span id="blocks_number"></span></p>
-            <p><strong>Block Information (click any block):</strong></p> 
-          <p class="pblock">ID: <span id="block_id" display:inline;></span></p>  
-          <p class="pblock">Width: <span id="block_w" display:inline;></span></p>
-            <p class="pblock">Height: <span id="block_h"></span></p>
-            <p class="pblock">Block Area: <span id="block_a"></span></p>
-          <p class="pblock">Space Used:<br> <span id="s_used"></span></p>
-
-
-
-          </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12"><br>
-                <p><strong>Connection Wheel:</strong></p>
-                <p class="pblock">The lenght of the border is connected to the number of the grid spaces that a block connects with other blocks in its perimeter. The line represents a connection between two blocks, and its thickness is proportional to how many grid spaces these blocks share in their perimeter. Connections are filtered when passing the mouse over the borders of the circle</p>      
-                <div id="area1"></div>
-                <p>Databases: <a href="simple_blocks.csv">simple_block.csv</a> , <a href="maindeck.csv">maindeck.csv</a> , <a href="twindeck.csv">twindeck.csv</a></p>  
-<hr>
-
-            </div>
-          </div>
-
-
-          <div class="row">
-            <div class="col-6">
-                <h2>About </h2>
-                  
-                <p><strong>App: </strong>This tool intends to be a <em>proof of concept</em> to demonstrate that it is possible to quickly develop a web-based app for handling ship design layout during conceptual phase. The app reads the blocks from a database (.csv file), plot them into a grid and evaluate their positioning, attributes, neighbors and connections. A connection whell plots the relationship between blocks.
-                    <br>Total work was approximatedely 14 hours, including concept development, coding, debugging, examples, layout detailing and text writing. 
-                    
-                    
-                    
-                    <p>This web-based approach allows extended functionalities when compared to a spreadsheet-like version, such as:
-                        <ul>
-                            <li>Pretty much every element can be parametrized and interacted with.</li>
-                            <li>It can be available online, being used in any HTML5 compatible browser (desktop, mobile, tablet).</li>
-                            <li>A large set of data handling libraries can be used, such as <a href="http://d3js.org/">d3</a>, <a href="http://snapsvg.io/">snap</a> and <a href="http://www.numericjs.com/">numeric.</a></li>
-                            <li>Possibility of a powerful script language in the backend, to support advanced calculation.</li>
-                </ul>
-                  <p>This work will be used for a collaborative research between the <a href="http://www.shiplab.hials.org/">Ship Design and Operations Lab @ HIALS</a> and <a href="http://www.ucl.ac.uk/mecheng/">Naval Architecture Research @ UCL</a>.</p>
-            </div>
-            <div class="col-6">
+    <div style="margin-left: 320px;"> 
           
-                    <p><strong>Features: </strong>
-                        
-                        <ul><li>Currently <em>grid size</em> and <em>canvas size</em> are parametrized. Slide to modify it (layout resets to orginal position).</li>
-                            <li>Space information is availble, with total number of rows, columns and total area of the grid.</li>
-                            <li>Click on a block to get its information (from database).</li>
-                            <li>Click and drag a block to change its position and update its space used information and matches.</li>
-                    
-                            <li><em>Space used</em> presents which positions in the grid the block uses.</li>
-                            <li><em>Matches</em> presents how blocks are connected, based on the analysis of their perimeter. Blocks adjacents have a two way match: [A,B] = [B,A] = match. A block totally inserted in another will have a one way match: A inside B, [A,B] = match; [B,A] no match. </li>
-                        <li>A connection wheel is presented, reprensenting graphically the perimetral matches. Connections are filtered when passing the mouse over the borders of the circle.</li>
-                            </ul>
-                                
-            </div>
-          </div>
+          <p><strong>Number of Blocks in the Database: </strong><span id="blocks_number"></span></p>
+          <p><strong>Block Information (click any block):</strong></p> 
+        <p class="pblock">ID: <span id="block_id" display:inline;></span></p>  
+        <p class="pblock">Width: <span id="block_w" display:inline;></span></p>
+          <p class="pblock">Height: <span id="block_h"></span></p>
+          <p class="pblock">Block Area: <span id="block_a"></span></p>
+        <p class="pblock">Space Used:<br> <span id="s_used"></span></p>
 
-    </main><!-- /.container -->
+          
+          
+          </div>
+</div>
+<p><strong>Connection Wheel:</strong></p>
+<p class="pblock">The lenght of the border is connected to the number of the grid spaces that a block connects with other blocks in its perimeter. The line represents a connection between two blocks, and its thickness is proportional to how many grid spaces these blocks share in their perimeter. Connections are filtered when passing the mouse over the borders of the circle</p>      
+<div id="area1"></div>
+ <p>Databases: <a href="simple_blocks.csv">simple_block.csv</a> , <a href="maindeck.csv">maindeck.csv</a> , <a href="twindeck.csv">twindeck.csv</a></p>   
+<hr>   
+      <h2>About </h2>
+      <div style="width: 100%; overflow: hidden;">
+    <div style="width: 50%; float: left;"> 
+        
+      <p><strong>App: </strong>This tool intends to be a <em>proof of concept</em> to demonstrate that it is possible to quickly develop a web-based app for handling ship design layout during conceptual phase. The app reads the blocks from a database (.csv file), plot them into a grid and evaluate their positioning, attributes, neighbors and connections. A connection whell plots the relationship between blocks.
+          <br>Total work was approximatedely 14 hours, including concept development, coding, debugging, examples, layout detailing and text writing. 
+          
+          
+          
+          <p>This web-based approach allows extended functionalities when compared to a spreadsheet-like version, such as:
+              <ul>
+                  <li>Pretty much every element can be parametrized and interacted with.</li>
+                  <li>It can be available online, being used in any HTML5 compatible browser (desktop, mobile, tablet).</li>
+                  <li>A large set of data handling libraries can be used, such as <a href="http://d3js.org/">d3</a>, <a href="http://snapsvg.io/">snap</a> and <a href="http://www.numericjs.com/">numeric.</a></li>
+                  <li>Possibility of a powerful script language in the backend, to support advanced calculation.</li>
+      </ul>
+        <p>This work will be used for a collaborative research between the <a href="http://www.shiplab.hials.org/">Ship Design and Operations Lab @ HIALS</a> and <a href="http://www.ucl.ac.uk/mecheng/">Naval Architecture Research @ UCL</a>.</p>
+          </div>
+          
+    <div style="margin-left: 52%;">  
+          
+<p><strong>Features: </strong>
+    
+    <ul><li>Currently <em>grid size</em> and <em>canvas size</em> are parametrized. Slide to modify it (layout resets to orginal position).</li>
+        <li>Space information is availble, with total number of rows, columns and total area of the grid.</li>
+        <li>Click on a block to get its information (from database).</li>
+        <li>Click and drag a block to change its position and update its space used information and matches.</li>
+
+        <li><em>Space used</em> presents which positions in the grid the block uses.</li>
+        <li><em>Matches</em> presents how blocks are connected, based on the analysis of their perimeter. Blocks adjacents have a two way match: [A,B] = [B,A] = match. A block totally inserted in another will have a one way match: A inside B, [A,B] = match; [B,A] no match. </li>
+    <li>A connection wheel is presented, reprensenting graphically the perimetral matches. Connections are filtered when passing the mouse over the borders of the circle.</li>
+        </ul>
+          
+          </div>
+</div>
+      
+ </div>    
+      
+            
+
     <script src="snap.svg-min.js"></script>
       <script src="d3.min.js"></script>
              <script src="d3.dependencyWheel.js"></script>
@@ -378,8 +365,7 @@ var data = {
 
        
     </script>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <script src="bootstrap.min.js"></script>
+      
   </body>
 </html>
+ 
