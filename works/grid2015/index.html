@@ -32,7 +32,7 @@
   
         <h3>GA Canvas</h3>
         <div class="row">
-          <div class="col-12">
+          <div class="col-md-12">
 
             <p>Grid size<input type="range" id="grid_s" value=8 min="0" max="40" oninput="create_grid()" step="1"> Canvas size - x: <input type="range" id="canv_x" value=985 min="0" max="5000" oninput="create_grid()" step="1"> y:<input type="range" id="canv_y" value=301 min="0" max="1201" oninput="create_grid()" step="1"></p>
             <p>Database:
@@ -79,10 +79,10 @@
         </div>
 
         <div class="row">
-            <div class="col-12"><br>
+            <div class="col-md-12"><br>
                 <p><strong>Connection Wheel:</strong></p>
-                <p class="pblock">The lenght of the border is connected to the number of the grid spaces that a block connects with other blocks in its perimeter. The line represents a connection between two blocks, and its thickness is proportional to how many grid spaces these blocks share in their perimeter. Connections are filtered when passing the mouse over the borders of the circle</p>      
-                <div id="area1"></div>
+                <p class="pblock">The lenght of the border is connected to the number of the grid spaces that a block connects with other blocks in its perimeter. The line represents a connection between two blocks, and its thickness is proportional to how many grid spaces these blocks share in their perimeter. Connections are filtered when passing the mouse over the borders of the circle</p>   
+                <div class="col-md-10 d-flex justify-content-center" id="area1"></div>
                 <p>Databases: <a href="simple_blocks.csv">simple_block.csv</a> , <a href="maindeck.csv">maindeck.csv</a> , <a href="twindeck.csv">twindeck.csv</a></p>  
 <hr>
 
@@ -91,7 +91,7 @@
 
 
           <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
                 <h2>About </h2>
                   
                 <p><strong>App: </strong>This tool intends to be a <em>proof of concept</em> to demonstrate that it is possible to quickly develop a web-based app for handling ship design layout during conceptual phase. The app reads the blocks from a database (.csv file), plot them into a grid and evaluate their positioning, attributes, neighbors and connections. A connection whell plots the relationship between blocks.
@@ -106,9 +106,8 @@
                             <li>A large set of data handling libraries can be used, such as <a href="http://d3js.org/">d3</a>, <a href="http://snapsvg.io/">snap</a> and <a href="http://www.numericjs.com/">numeric.</a></li>
                             <li>Possibility of a powerful script language in the backend, to support advanced calculation.</li>
                 </ul>
-                  <p>This work will be used for a collaborative research between the <a href="http://www.shiplab.hials.org/">Ship Design and Operations Lab @ HIALS</a> and <a href="http://www.ucl.ac.uk/mecheng/">Naval Architecture Research @ UCL</a>.</p>
             </div>
-            <div class="col-6">
+            <div class="col-md-6">
           
                     <p><strong>Features: </strong>
                         
@@ -124,6 +123,13 @@
                                 
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-12">
+
+              <p>This work will be used for a collaborative research between the <a href="http://www.shiplab.hials.org/">Ship Design and Operations Lab @ HIALS</a> and <a href="http://www.ucl.ac.uk/mecheng/">Naval Architecture Research @ UCL</a>.</p>
+            </div>
+
+          </div>
 
     </main><!-- /.container -->
     <script src="snap.svg-min.js"></script>
@@ -132,8 +138,9 @@
         <script src="composerBuilder.js"></script>
 
     <script>
-    document.getElementById("grid_s").value = Math.round(getWidth()/100)*0.70
-    console.log(document.getElementById("grid_s").value);
+    document.getElementById("grid_s").value = Math.min(Math.round(getWidth()/100)*0.78, 12);
+    document.getElementById("canv_x").value =  Math.min(Math.round(getWidth())*0.78, 1119);
+    document.getElementById("canv_y").value =  Math.min(Math.round(getWidth())*0.25, 301);
     create_grid();
     
     function create_grid(){
