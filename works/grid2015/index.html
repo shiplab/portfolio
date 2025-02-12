@@ -28,13 +28,13 @@
     <main role="main" class="container">
 
         <h1>Ship Design Layout Tool - A Web-based App Prototype</h1>
-        <p class="lead" style="width:80%" align="right"> by Henrique M. Gaspar - Associate Professor, <a href="http://www.shiplab.hials.org/">ShipLab Aalesund University College <img src="hials_logo.jpg" width="10%"> </a> <br>(hega @ hials.no), v0.1, Jun 2015.</p>
+        <p style="width:80%" align="right"> by Henrique M. Gaspar - Associate Professor, <a href="http://www.shiplab.hials.org/">ShipLab Aalesund University College <img src="hials_logo.jpg" width="10%"> </a> <br>(hega @ hials.no), v0.1, Jun 2015.</p>
   
         <h3>GA Canvas</h3>
         <div class="row">
           <div class="col-12">
 
-            <p>Grid size<input type="range" id="grid_s" value=12 min="0" max="50" oninput="create_grid()" step="1"> Canvas size - x: <input type="range" id="canv_x" value=985 min="0" max="5000" oninput="create_grid()" step="1"> y:<input type="range" id="canv_y" value=301 min="0" max="1201" oninput="create_grid()" step="1"></p>
+            <p>Grid size<input type="range" id="grid_s" value=8 min="0" max="40" oninput="create_grid()" step="1"> Canvas size - x: <input type="range" id="canv_x" value=985 min="0" max="5000" oninput="create_grid()" step="1"> y:<input type="range" id="canv_y" value=301 min="0" max="1201" oninput="create_grid()" step="1"></p>
             <p>Database:
       
             <input type="radio" name="db" id="simple_b" onclick="create_grid()"checked>simple_blocks.csv
@@ -132,6 +132,8 @@
         <script src="composerBuilder.js"></script>
 
     <script>
+    document.getElementById("grid_s").value = Math.round(getWidth()/100)*0.70
+    console.log(document.getElementById("grid_s").value);
     create_grid();
     
     function create_grid(){
@@ -375,11 +377,21 @@ var data = {
             }
         
                    
-
-       
+            function getWidth() {
+              return Math.max(
+                document.body.scrollWidth,
+                document.documentElement.scrollWidth,
+                document.body.offsetWidth,
+                document.documentElement.offsetWidth,
+                document.documentElement.clientWidth
+              );
+            }
     </script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
+    <script
+  src="jquery-3.3.1.js"></script>
     <script src="bootstrap.min.js"></script>
+    
   </body>
 </html>
