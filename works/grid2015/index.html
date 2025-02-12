@@ -2,11 +2,15 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Code updated on Feb. 2025 to include Bootstrap. Main code the same as 2015 - H. Gaspar -->
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico"> -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
 
     <title>Ship Design Layout Tool - A Web-based Prototype</title>
 
@@ -82,7 +86,7 @@
             <div class="col-md-12"><br>
                 <p><strong>Connection Wheel:</strong></p>
                 <p class="pblock">The lenght of the border is connected to the number of the grid spaces that a block connects with other blocks in its perimeter. The line represents a connection between two blocks, and its thickness is proportional to how many grid spaces these blocks share in their perimeter. Connections are filtered when passing the mouse over the borders of the circle</p>   
-                <div class="col-md-10 d-flex justify-content-center" id="area1"></div>
+                <div class="col d-flex justify-content-center" id="area1"></div>
                 <p>Databases: <a href="simple_blocks.csv">simple_block.csv</a> , <a href="maindeck.csv">maindeck.csv</a> , <a href="twindeck.csv">twindeck.csv</a></p>  
 <hr>
 
@@ -370,12 +374,13 @@ var data = {
                                      matrix: mvalues
                                  };
                 
+               // var chart = d3.chart.dependencyWheel()
+
+                
                 var chart = d3.chart.dependencyWheel()
-                .width(800)    // also used for height, since the wheel is in a a square
+                .width(Math.min(Math.round(getWidth())*0.6, 650)+200)    // also used for height, since the wheel is in a a square
                 .margin(150)   // used to display package names
                 .padding(.02); // separating groups in the wheel
-                
-                var chart = d3.chart.dependencyWheel();
                 d3.select('#area1')
                 .datum(data)
                 .call(chart);
@@ -392,6 +397,13 @@ var data = {
                 document.documentElement.offsetWidth,
                 document.documentElement.clientWidth
               );
+            }
+
+            window.onresize = function(event) {
+              document.getElementById("grid_s").value = Math.min(Math.round(getWidth()/100)*0.78, 12);
+              document.getElementById("canv_x").value =  Math.min(Math.round(getWidth())*0.78, 1119);
+              document.getElementById("canv_y").value =  Math.min(Math.round(getWidth())*0.25, 301);
+              create_grid();
             }
     </script>
     <!-- Bootstrap core JavaScript
