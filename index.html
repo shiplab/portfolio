@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ship Design and Operation Lab | NTNU</title>
+<meta name="description" content="Open tools and data for ship design from the Ship Design and Operation Lab at NTNU: Hull Generator, Building Block Editor, Ship Evacuation and the R/V Gunnerus Open Data Set.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ntnu:#00509E;       /* NTNU blue */
+  --ntnu-dark:#003A73;
+  --ntnu-deep:#002B55;
+  --ntnu-light:#79A2CE;
+  --tint:#EEF3F9;
+  --ink:#1A1A1A;
+  --ink-2:#555F69;
+  --rule:#D5DCE4;
+  --font:"Open Sans",Arial,Helvetica,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#fff;color:var(--ink);font:400 17px/1.65 var(--font)}
+a{color:var(--ntnu)}
+a:focus-visible,.btn:focus-visible{outline:3px solid var(--ntnu-light);outline-offset:3px}
+img{display:block;max-width:100%;height:auto}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+
+/* NTNU header */
+.top{border-top:4px solid var(--ntnu);background:#fff;border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;min-height:76px}
+.brand{display:flex;align-items:center;gap:18px;text-decoration:none;color:var(--ink)}
+.brand img{width:150px;height:auto}
+.brand span{font-weight:600;font-size:16px;border-left:1px solid var(--rule);padding-left:18px;line-height:1.3}
+.nav{display:flex;gap:26px;font-size:15px;font-weight:600}
+.nav a{color:var(--ink);text-decoration:none}
+.nav a:hover{color:var(--ntnu);text-decoration:underline}
+
+/* hero */
+.hero{background:var(--ntnu);color:#fff;position:relative;overflow:hidden}
+.hero .wrap{padding-top:64px;padding-bottom:96px;position:relative;z-index:1}
+.hero h1{font-weight:700;font-size:clamp(36px,5.6vw,64px);line-height:1.05;letter-spacing:-0.015em;margin:0;max-width:15ch}
+.hero p{font-size:20px;line-height:1.55;max-width:56ch;margin:22px 0 0;color:#DCE8F5}
+.waves{position:absolute;left:0;right:0;bottom:0;height:70px}
+.waves svg{width:100%;height:100%;display:block}
+
+
+/* sections */
+section{padding:80px 0 0}
+h2{font-weight:700;font-size:32px;line-height:1.15;margin:0 0 8px;color:var(--ntnu-dark)}
+.lede{color:var(--ink-2);margin:0 0 32px;max-width:62ch}
+
+.tool{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:40px;align-items:center;padding:36px 0;border-top:1px solid var(--rule)}
+.tool:last-child{border-bottom:1px solid var(--rule)}
+.tool.flip{grid-template-columns:minmax(0,1fr) minmax(0,1.45fr)}
+.tool.flip .shot{order:2}
+.tool.full{grid-template-columns:1fr}
+.shot{border:1px solid var(--rule);overflow:hidden;background:#fff}
+.tool h3{font-weight:700;font-size:25px;line-height:1.2;margin:0}
+.meta{font-size:14px;color:var(--ink-2);margin:6px 0 14px}
+.tool p{margin:0 0 12px;max-width:52ch}
+.tool.full .text{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 40px;align-items:start}
+.tool.full .text p{max-width:60ch}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.btn{font:600 15px/1 var(--font);padding:12px 18px;text-decoration:none;border:2px solid var(--ntnu);color:var(--ntnu);background:#fff}
+.btn.primary{background:var(--ntnu);color:#fff}
+.btn:hover{background:var(--ntnu-dark);border-color:var(--ntnu-dark);color:#fff}
+
+/* legacy */
+.legacy{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.legacy li{display:grid;grid-template-columns:220px minmax(0,1fr) auto;gap:8px 32px;padding:22px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.legacy h3{font-weight:700;font-size:18px;line-height:1.25;margin:0}
+.legacy .yrs{display:block;font-size:14px;color:var(--ink-2);margin-top:2px}
+.legacy p{margin:0;max-width:62ch}
+.legacy .l{display:flex;gap:16px;flex-wrap:wrap;font-size:15px;font-weight:600;white-space:nowrap}
+.apps-h{font-weight:700;font-size:22px;line-height:1.2;margin:56px 0 6px;color:var(--ntnu-dark)}
+.apps-lede{color:var(--ink-2);margin:0 0 24px;max-width:62ch}
+.apps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.apps li{background:var(--tint);border-top:3px solid var(--ntnu);padding:16px 18px 18px;display:flex;flex-direction:column}
+.apps h4{font-size:17px;line-height:1.3;margin:0}
+.apps h4 a{text-decoration:none}
+.apps h4 a:hover{text-decoration:underline}
+.apps .yrs{font-size:14px;color:var(--ink-2);margin-top:2px}
+.apps p{font-size:15px;line-height:1.55;margin:10px 0 0}
+.apps .by{font-size:14px;color:var(--ink-2);margin-top:auto;padding-top:12px}
+.apps .prize{font-size:14px;font-weight:600;color:var(--ntnu-dark);margin-top:8px}
+
+/* about */
+#about{margin-top:88px;padding:64px 0 72px;background:var(--tint)}
+.about{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:48px}
+.about p{margin:0 0 14px;max-width:60ch}
+.about h3{font-size:17px;font-weight:700;margin:0 0 10px;color:var(--ntnu-dark)}
+.areas{margin:0 0 28px;padding:0 0 0 18px}
+.areas li{margin:0 0 4px}
+.people{list-style:none;margin:0;padding:0}
+.people li{padding:12px 0;border-top:1px solid var(--rule)}
+.people li:last-child{border-bottom:1px solid var(--rule)}
+.people b{display:block;font-weight:600}
+.people span{font-size:15px;color:var(--ink-2)}
+.about .sub{margin-top:28px}
+.disclaimer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule)}
+.disclaimer h3{font-size:15px;font-weight:700;margin:0 0 6px;color:var(--ink-2)}
+.disclaimer p{font-size:14px;line-height:1.6;color:var(--ink-2);margin:0;max-width:96ch}
+
+footer{background:var(--ntnu-deep);color:#C9D7E6;font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding-top:28px;padding-bottom:32px}
+footer a{color:#fff}
+
+@media (max-width:860px){
+  .nav{display:none}
+  .tool,.tool.flip{grid-template-columns:1fr;gap:22px}
+  .tool.flip .shot{order:0}
+  .tool.full .text{grid-template-columns:1fr}
+  .legacy li{grid-template-columns:1fr}
+  .legacy .l{white-space:normal}
+  .apps{grid-template-columns:1fr}
+  .about{grid-template-columns:1fr;gap:24px}
+  section{padding-top:60px}
+}
+@media (max-width:480px){
+  .wrap{padding:0 16px}
+  body{font-size:16px}
+  .hero p{font-size:18px}
+  .brand img{width:120px}
+  .brand span{font-size:14px;padding-left:12px}
+  .brand{gap:12px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="https://www.ntnu.edu/ihb/ship-lab"><img src="images/ntnu-logo.png" width="181" height="36" alt="NTNU"><span>Ship Design and<br>Operation Lab</span></a>
+    <nav class="nav" aria-label="Page">
+      <a href="#tools">Tools and data</a>
+      <a href="#legacy">Legacy</a>
+      <a href="#about">About</a>
+      <a href="https://github.com/shiplab">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>Open tools for naval architecture</h1>
+    <p>Web apps and open data for early-stage ship design, made for teaching and research. Each tool is a single web page: open it in a browser, nothing to install.</p>
+  </div>
+  <div class="waves" aria-hidden="true">
+    <svg viewBox="0 0 1200 70" preserveAspectRatio="none">
+      <path d="M0 34 Q 75 22 150 34 T 300 34 T 450 34 T 600 34 T 750 34 T 900 34 T 1050 34 T 1200 34 V70 H0 Z" fill="#0A5DAD"/>
+      <path d="M0 50 Q 100 38 200 50 T 400 50 T 600 50 T 800 50 T 1000 50 T 1200 50 V70 H0 Z" fill="#FFFFFF"/>
+    </svg>
+  </div>
+</div>
+
+<main class="wrap">
+<section id="tools" aria-labelledby="tools-h">
+  <h2 id="tools-h">Tools and data</h2>
+  <p class="lede">In active development in 2026. For education and early concept work: the results are estimates, not for design approval.</p>
+
+  <article class="tool" id="dbb">
+    <a class="shot" href="https://shiplab.github.io/dbb/"><img src="images/dbb.webp" width="1200" height="760" alt="The Building Block Editor with a feeder container ship: block hierarchy on the left, 3D view of the blocks inside the hull, and the summary of requirements, floating and stability below" loading="lazy"></a>
+    <div class="text">
+      <h3>Ship Design Building Block Editor</h3>
+      <div class="meta">2026 &nbsp;/&nbsp; Design Building Block approach &nbsp;/&nbsp; DOI <a href="https://doi.org/10.5281/zenodo.23651032">10.5281/zenodo.23651032</a></div>
+      <p>Build a ship from 3D blocks for its spaces, grouped by function and linked to requirements. The tables sum volume, area, weight and centres of gravity.</p>
+      <p>An illustrative hull floats at the summed weight for a first check of draught, trim, heel and stability, with resistance, seakeeping and what-if variants.</p>
+      <div class="links">
+        <a class="btn primary" href="https://shiplab.github.io/dbb/">Open the editor</a>
+        <a class="btn" href="https://github.com/shiplab/dbb">Code</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="tool flip" id="hull">
+    <a class="shot" href="https://shiplab.github.io/hull/"><img src="images/hull.webp" width="1100" height="707" alt="The Hull Generator with the sheer plan, half-breadth plan, body plan and 3D hull, and the Holtrop resistance panel" loading="lazy"></a>
+    <div class="text">
+      <h3>Hull Generator</h3>
+      <div class="meta">2026 &nbsp;/&nbsp; DOI <a href="https://doi.org/10.5281/zenodo.23820204">10.5281/zenodo.23820204</a></div>
+      <p>Start from one of eleven hull types and a few main dimensions, then reshape the curves in three linked 2D views beside a live 3D hull.</p>
+      <p>Hydrostatics and a Holtrop resistance estimate update as you edit. The table of offsets loads straight into the Building Block Editor.</p>
+      <div class="links">
+        <a class="btn primary" href="https://shiplab.github.io/hull/">Open the generator</a>
+        <a class="btn" href="https://github.com/shiplab/hull">Code</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="tool" id="evac">
+    <a class="shot" href="https://shiplab.github.io/evac/"><img src="images/evac.webp" width="1100" height="619" alt="Ship Evacuation during a run: an accommodation deck with persons walking, the density map and the live results" loading="lazy"></a>
+    <div class="text">
+      <h3>Ship Evacuation</h3>
+      <div class="meta">2026 &nbsp;/&nbsp; Reads Building Block Editor files &nbsp;/&nbsp; DOI <a href="https://doi.org/10.5281/zenodo.23816748">10.5281/zenodo.23816748</a></div>
+      <p>Persons from the IMO MSC.1/Circ.1533 population walk to the muster stations of a general arrangement, moved by a Social Force model and shown in 3D.</p>
+      <p>Gives the assembly time, arrival curve, door and stair flows and congestion. Fire and flooding can block routes.</p>
+      <div class="links">
+        <a class="btn primary" href="https://shiplab.github.io/evac/">Open the simulator</a>
+        <a class="btn" href="https://github.com/shiplab/evac">Code</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="tool full" id="gunnerus">
+    <a class="shot" href="https://shiplab.github.io/gunnerus/"><img src="images/gunnerus.webp" width="1800" height="615" alt="R/V Gunnerus three ways: the general arrangement drawing, the 3D model coloured by SFI group, and ship motion and wave height measured at sea" loading="lazy"></a>
+    <div class="text">
+      <div>
+        <h3>R/V Gunnerus Open Data Set</h3>
+        <div class="meta">2026 &nbsp;/&nbsp; CC BY-NC 4.0 &nbsp;/&nbsp; DOI <a href="https://doi.org/10.5281/zenodo.23501086">10.5281/zenodo.23501086</a></div>
+      </div>
+      <div>
+        <p>The NTNU research vessel three ways: 15 production drawings, a 3D model coloured by SFI group, engineering documents with structured metadata, and operational data measured at sea.</p>
+        <div class="links">
+          <a class="btn primary" href="https://shiplab.github.io/gunnerus/">Explore the data</a>
+          <a class="btn" href="https://github.com/shiplab/gunnerus">Repository</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section id="legacy" aria-labelledby="legacy-h">
+  <h2 id="legacy-h">Legacy</h2>
+  <p class="lede">Earlier work, no longer maintained. Kept online as a reference for research and teaching; some demos may not run in current browsers.</p>
+  <ul class="legacy">
+    <li>
+      <div><h3>Vessel.js</h3><span class="yrs">2017–2025</span></div>
+      <p>Open-source JavaScript library for conceptual ship design, with the vessel as an object: hydrostatics, stability, motions, marine operations, manoeuvring, fuel and energy.</p>
+      <div class="l"><a href="https://shiplab.github.io/vesseljs/">Examples</a><a href="https://github.com/shiplab/vesseljs">Code</a></div>
+    </li>
+    <li>
+      <div><h3>Digital twins of model ships</h3><span class="yrs">2020–2026</span></div>
+      <p>Two standards-based digital twins: live motion monitoring of a toy boat, and monitoring and control of a scale-model PSV in a wave basin.</p>
+      <div class="l"><a href="https://shiplab.github.io/dt_cv/basin_demo.html">Basin replay</a><a href="https://github.com/shiplab/dt_cv/wiki">Docs</a><a href="https://github.com/shiplab/dt_cv">Code</a></div>
+    </li>
+    <li>
+      <div><h3>Vessel.js with OpenBridge</h3><span class="yrs">2021–2023</span></div>
+      <p>Vessel.js combined with the OpenBridge bridge design system (AHO), with terrain and AIS traffic around Trondheim and Ålesund.</p>
+      <div class="l"><a href="https://shiplab.github.io/openbridge/">Trondheim</a><a href="https://shiplab.github.io/openbridge/alesund_with_ais.html">Ålesund</a><a href="https://github.com/shiplab/openbridge">Code</a></div>
+    </li>
+  </ul>
+
+  <h3 class="apps-h">Early experimental web apps, 2013–2019</h3>
+  <p class="apps-lede">Small single-purpose apps from the first years of the lab, many made by master students. Most still run in the browser.</p>
+  <ul class="apps">
+    <li>
+      <h4><a href="https://uscience.org/files/parametric.html">Parametric ship design</a></h4>
+      <span class="yrs">2013</span>
+      <p>A simple parametric design of an anchor handling tug supply vessel: from mission requirements to capabilities, sizing, criteria checks and a summary of the design.</p>
+      <p class="prize">The first of the web apps</p>
+      <p class="by">Henrique M. Gaspar, with Ulstein International.</p>
+    </li>
+    <li>
+      <h4><a href="https://uscience.org/files/lifecycle.html">Lifecycle model for LNG-fuelled ships in the Arctic</a></h4>
+      <span class="yrs">2014</span>
+      <p>Epoch-era analysis of LNG-fuelled and conventional ships on Arctic routes under changing ice, rules and markets, comparing designs on CAPEX, OPEX and emissions. Presented at OMAE 2014.</p>
+      <p class="by">Henrique M. Gaspar, with Ulstein International.</p>
+    </li>
+    <li>
+      <h4><a href="https://uscience.org/compit2014/">Data-Driven Documents in conceptual ship design</a></h4>
+      <span class="yrs">2014</span>
+      <p>Interactive web visualisations of conceptual ship design data with the D3.js library, to help designers and stakeholders find knowledge early in the design. Presented at COMPIT 2014.</p>
+      <p class="by">Henrique M. Gaspar, Per Olaf Brett, Ali Ebrahim and Andre Keane.</p>
+    </li>
+    <li>
+      <h4><a href="https://uscience.org/files/grid">Ship Design Layout Tool</a></h4>
+      <span class="yrs">2015</span>
+      <p>Proof of concept for layouts in conceptual design: blocks read from a CSV file are placed on a grid, with their neighbours and connections shown in a connection wheel.</p>
+      <p class="by">Henrique M. Gaspar, with the naval architecture group at UCL.</p>
+    </li>
+    <li>
+      <h4><a href="https://shiplab.hials.org/app/shipmotion/">Ship Motion Application</a></h4>
+      <span class="yrs">2015, updated 2024</span>
+      <p>Heave, pitch, roll, vertical acceleration and wave bending moment from the main dimensions, with the closed-form expressions of Jensen, Mansour and Olsen (2004).</p>
+      <p class="by">Sthefano L. Andrade and Henrique M. Gaspar. Updated by Gaël Porée and Maxime Albouy (SeaTech, Toulon).</p>
+    </li>
+    <li>
+      <h4><a href="https://shiplab.hials.org/app//6dofAntiHeelingTanks/">Roll and heave with anti-heeling tanks</a></h4>
+      <span class="yrs">2015</span>
+      <p>Animated linear roll and heave of a barge-like vessel in still water, with a moving-liquid tank.</p>
+      <p class="by">Thiago G. Monteiro, Jiafeng Xu and Henrique M. Gaspar.</p>
+    </li>
+    <li>
+      <h4><a href="https://shiplab.hials.org/app/twotanks/">Coupled tanks</a></h4>
+      <span class="yrs">2016</span>
+      <p>Two tanks joined by a pipe, with an optional pump: water levels and flow rate over time.</p>
+      <p class="by">Thiago G. Monteiro, Synnøve Nesdal Sandnes and Henrique M. Gaspar.</p>
+    </li>
+    <li>
+      <h4><a href="https://shiplab.hials.org/app//offset/">Hull from a table of offsets</a></h4>
+      <span class="yrs">2016</span>
+      <p>Lines plan and 3D hull plotted from a table of offsets in CSV, with a patrol craft and a fishing boat as examples.</p>
+      <p class="by">Jefferson Flor and Henrique M. Gaspar.</p>
+    </li>
+    <li>
+      <h4><a href="https://shiplab.hials.org/app//holtrop/">Holtrop resistance</a></h4>
+      <span class="yrs">2016</span>
+      <p>Resistance of a displacement ship by the Holtrop method, split into frictional, form, appendage, wave, bulb, transom and correlation parts.</p>
+      <p class="by">Jefferson Flor, Thiago G. Monteiro and Henrique M. Gaspar.</p>
+    </li>
+    <li>
+      <h4><a href="https://shiplab.hials.org/app//shiplines/">Hull Lines Generator</a></h4>
+      <span class="yrs">2016</span>
+      <p>Parametric hull lines from the main dimensions, inspired by X-bow offshore vessels. Curves that fail validation turn red.</p>
+      <p class="by">Thiago G. Monteiro and Henrique M. Gaspar.</p>
+    </li>
+    <li>
+      <h4><a href="https://shiplab.hials.org/app//shipstructure/">Structural analysis</a></h4>
+      <span class="yrs">2016</span>
+      <p>Load distribution, shear force and bending moments to DNV rules, and sizing of longitudinal stiffeners.</p>
+      <p class="by">Sthefano L. Andrade.</p>
+    </li>
+    <li>
+      <h4><a href="https://uscience.org/compit2016">Ship Motion Simulator</a></h4>
+      <span class="yrs">2016</span>
+      <p>Real-time 3D simulator of a ship virtual prototype: choose the bow, accommodation, propulsion and crane operation, then set the waves and motions.</p>
+      <p class="prize">DNV GL COMPIT Award 2016</p>
+      <p class="by">Olivia Chaves, Elias Hasle and Henrique M. Gaspar.</p>
+    </li>
+    <li>
+      <h4><a href="https://uscience.org/icsos2018">Hull Scantlings Design Assistant</a></h4>
+      <span class="yrs">2018</span>
+      <p>Hull girder loads to DNV GL rules and a hull girder strength check, from the operating profile, main dimensions and cross-sections. Presented at ICSOS 2018.</p>
+      <p class="by">Olivia Chaves (master thesis), supervised by Henrique M. Gaspar and Henning Borgen (SINTEF Ålesund).</p>
+    </li>
+    <li>
+      <h4><a href="https://dbb.ucl.im/">DBB Method parametric app</a></h4>
+      <span class="yrs">2019</span>
+      <p>Design Building Block app with a parametric hull, bulkheads and function blocks: hydrostatics and stability, Holtrop resistance and seakeeping. UCL and NTNU.</p>
+      <p class="by">Diogo Kramel, building on work by Alexander S. Piperakis and Henrique M. Gaspar (2016).</p>
+    </li>
+  </ul>
+</section>
+</main>
+
+<section id="about" aria-labelledby="about-h">
+  <div class="wrap about">
+    <div>
+      <h2 id="about-h">About the lab</h2>
+      <p>The Ship Design and Operation Lab at NTNU studies how ships are designed and how they behave in maritime operations. We build virtual ship models, from the first sketch of the spaces to the ship at sea, and simulate their performance in the web browser.</p>
+      <p>The work is open by default: the tools and data on this page are free to use for teaching and research, and the code is on GitHub. The lab works closely with industry through the Blue Maritime Cluster.</p>
+      <h3>Research areas</h3>
+      <ul class="areas">
+        <li>Fast-track and data-driven ship design</li>
+        <li>3D models through the design process</li>
+        <li>Virtual prototyping and simulation in the browser</li>
+        <li>Product lifecycle management and modularisation</li>
+      </ul>
+      <p><a href="https://www.ntnu.edu/ihb/ship-lab">The lab at ntnu.edu</a></p>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <ul class="people">
+        <li><b><a href="https://www.ntnu.no/ansatte/henrique.gaspar">Henrique M. Gaspar</a></b></li>
+      </ul>
+      <h3 class="sub">Contributors</h3>
+      <p>Over the years many students and colleagues, at NTNU and at partner universities, have contributed to these tools and data sets. Their names are in each repository.</p>
+    </div>
+  </div>
+  <div class="wrap"><div class="disclaimer">
+    <h3>Disclaimer</h3>
+    <p>The tools are for education and early concept work. Hulls are illustrative, and weights, hydrostatics, stability, resistance and evacuation times are simplified estimates. Do not use the results for design approval, class or flag-state documentation, or any safety-critical decision. The software and data are provided as they are, without warranty; each repository states its licence.</p>
+  </div></div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Ship Design and Operation Lab, NTNU</span>
+    <a href="https://github.com/shiplab">All repositories on GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>
