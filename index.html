@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ship Design and Operation Lab | NTNU</title>
-<meta name="description" content="Open tools and data for ship design from the Ship Design and Operation Lab at NTNU: Hull Generator, Building Block Editor, Ship Evacuation and the R/V Gunnerus Open Data Set.">
+<meta name="description" content="Open tools and data for naval architecture from the Ship Design and Operation Lab at NTNU: Hull Generator, Ship Design Building Block Editor, GA to DBB, Ship Evacuation and the R/V Gunnerus Open Data Set.">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -147,7 +147,7 @@ footer a{color:#fff}
 
 <div class="hero">
   <div class="wrap">
-    <h1>Open tools for teaching Naval Architecture</h1>
+    <h1>Open tools for naval architecture</h1>
     <p>Web apps and open data for early-stage ship design, made for teaching and research. Each tool is a single web page: open it in a browser, nothing to install.</p>
   </div>
   <div class="waves" aria-hidden="true">
@@ -164,7 +164,7 @@ footer a{color:#fff}
   <p class="lede">In active development in 2026. For education and early concept work: the results are estimates, not for design approval.</p>
 
   <article class="tool" id="dbb">
-    <a class="shot" href="https://shiplab.github.io/dbb/"><img src="images/dbb.webp" width="1200" height="760" alt="The Building Block Editor with a feeder container ship: block hierarchy on the left, 3D view of the blocks inside the hull, and the summary of requirements, floating and stability below" loading="lazy"></a>
+    <a class="shot" href="https://shiplab.github.io/dbb/"><img src="images/dbb.webp" width="1200" height="760" alt="The Ship Design Building Block Editor with a feeder container ship: block hierarchy on the left, 3D view of the blocks inside the hull, and the summary of requirements, floating and stability below" loading="lazy"></a>
     <div class="text">
       <h3>Ship Design Building Block Editor</h3>
       <div class="meta">2026 &nbsp;/&nbsp; Design Building Block approach &nbsp;/&nbsp; DOI <a href="https://doi.org/10.5281/zenodo.23651032">10.5281/zenodo.23651032</a></div>
@@ -183,7 +183,7 @@ footer a{color:#fff}
       <h3>Hull Generator</h3>
       <div class="meta">2026 &nbsp;/&nbsp; DOI <a href="https://doi.org/10.5281/zenodo.23820204">10.5281/zenodo.23820204</a></div>
       <p>Start from one of eleven hull types and a few main dimensions, then reshape the curves in three linked 2D views beside a live 3D hull.</p>
-      <p>Hydrostatics and a Holtrop resistance estimate update as you edit. The table of offsets loads straight into the Building Block Editor.</p>
+      <p>Hydrostatics and a Holtrop resistance estimate update as you edit. The table of offsets loads straight into the Ship Design Building Block Editor.</p>
       <div class="links">
         <a class="btn primary" href="https://shiplab.github.io/hull/">Open the generator</a>
         <a class="btn" href="https://github.com/shiplab/hull">Code</a>
@@ -191,11 +191,25 @@ footer a{color:#fff}
     </div>
   </article>
 
-  <article class="tool" id="evac">
+  <article class="tool" id="ga">
+    <a class="shot" href="https://shiplab.github.io/ga/"><img src="images/ga.webp" width="1200" height="720" alt="GA to DBB with the tanker example: the general arrangement views read into 410 blocks" loading="lazy"></a>
+    <div class="text">
+      <h3>GA to DBB</h3>
+      <div class="meta">2026 &nbsp;/&nbsp; Writes Ship Design Building Block Editor files &nbsp;/&nbsp; DOI <a href="https://doi.org/10.5281/zenodo.23887058">10.5281/zenodo.23887058</a></div>
+      <p>Reads a general arrangement drawing (vector PDF, DXF, SVG or a scanned picture) and turns its compartments into blocks, with the decks, a hull guess and the main particulars.</p>
+      <p>The app proposes and you check and correct, then save a project for the Ship Design Building Block Editor. The drawing never leaves your computer.</p>
+      <div class="links">
+        <a class="btn primary" href="https://shiplab.github.io/ga/">Open the app</a>
+        <a class="btn" href="https://github.com/shiplab/ga">Code</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="tool flip" id="evac">
     <a class="shot" href="https://shiplab.github.io/evac/"><img src="images/evac.webp" width="1100" height="619" alt="Ship Evacuation during a run: an accommodation deck with persons walking, the density map and the live results" loading="lazy"></a>
     <div class="text">
       <h3>Ship Evacuation</h3>
-      <div class="meta">2026 &nbsp;/&nbsp; Reads Building Block Editor files &nbsp;/&nbsp; DOI <a href="https://doi.org/10.5281/zenodo.23816748">10.5281/zenodo.23816748</a></div>
+      <div class="meta">2026 &nbsp;/&nbsp; Reads Ship Design Building Block Editor files &nbsp;/&nbsp; DOI <a href="https://doi.org/10.5281/zenodo.23816748">10.5281/zenodo.23816748</a></div>
       <p>Persons from the IMO MSC.1/Circ.1533 population walk to the muster stations of a general arrangement, moved by a Social Force model and shown in 3D.</p>
       <p>Gives the assembly time, arrival curve, door and stair flows and congestion. Fire and flooding can block routes.</p>
       <div class="links">
