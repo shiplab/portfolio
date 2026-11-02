@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ship Design and Operation Lab | NTNU</title>
-<meta name="description" content="Open tools and data for naval architecture from the Ship Design and Operation Lab at NTNU: Hull Generator, Ship Design Building Block Editor, GA to DBB, Ship Evacuation and the R/V Gunnerus Open Data Set.">
+<meta name="description" content="Open tools and data for naval architecture from the Ship Design and Operation Lab at NTNU: Hull Generator, Ship Design Building Block Editor, GA to DBB, Ship Evacuation, Structure from DBB and the R/V Gunnerus Open Data Set.">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -215,6 +215,20 @@ footer a{color:#fff}
       <div class="links">
         <a class="btn primary" href="https://shiplab.github.io/evac/">Open the simulator</a>
         <a class="btn" href="https://github.com/shiplab/evac">Code</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="tool" id="struct">
+    <a class="shot" href="https://shiplab.github.io/struct/"><img src="images/struct.webp" width="1200" height="750" alt="Structure from DBB with a box barge open: the regions along the hull and the checks of the structure" loading="lazy"></a>
+    <div class="text">
+      <h3>Structure from DBB</h3>
+      <div class="meta">2026 &nbsp;/&nbsp; Reads Ship Design Building Block Editor files &nbsp;/&nbsp; DOI <a href="https://doi.org/10.5281/zenodo.23898282">10.5281/zenodo.23898282</a></div>
+      <p>Splits the ship into regions at the bulkheads found in the blocks, then sizes and checks the plates, longitudinals and primary members of each region to DNV rules, with buckling and hull girder strength.</p>
+      <p>A transverse web frame per region is analysed as a beam model under load cases read from the blocks. Eight short lessons on a box barge teach the basics.</p>
+      <div class="links">
+        <a class="btn primary" href="https://shiplab.github.io/struct/">Open the app</a>
+        <a class="btn" href="https://github.com/shiplab/struct">Code</a>
       </div>
     </div>
   </article>

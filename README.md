@@ -12,6 +12,7 @@ Open tools and data for early-stage ship design, made for teaching and research.
 | [Hull Generator](https://shiplab.github.io/hull/) | Make and reshape a hull form; hydrostatics, Holtrop resistance, table of offsets | [code](https://github.com/shiplab/hull) |
 | [GA to DBB](https://shiplab.github.io/ga/) | Read a general arrangement drawing into Ship Design Building Block Editor blocks | [code](https://github.com/shiplab/ga) |
 | [Ship Evacuation](https://shiplab.github.io/evac/) | Persons walking to the muster stations of a Ship Design Building Block Editor layout | [code](https://github.com/shiplab/evac) |
+| [Structure from DBB](https://shiplab.github.io/struct/) | Size and check the main hull structure of a Ship Design Building Block Editor design | [code](https://github.com/shiplab/struct) |
 | [R/V Gunnerus Open Data Set](https://shiplab.github.io/gunnerus/) | Drawings, 3D model, documents and operational data for R/V Gunnerus | [repository](https://github.com/shiplab/gunnerus) |
 
 ## Legacy
